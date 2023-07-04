@@ -8,6 +8,7 @@ class PlutoRow {
     this.sortIdx = 0,
     bool checked = false,
     Key? key,
+    this.data,
   })  : type = type ?? PlutoRowTypeNormal.instance,
         _checked = checked,
         _state = PlutoRowState.none,
@@ -16,6 +17,8 @@ class PlutoRow {
   final PlutoRowType type;
 
   final Key _key;
+
+  final data;
 
   Map<String, PlutoCell> cells;
 
