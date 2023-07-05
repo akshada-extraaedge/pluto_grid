@@ -323,7 +323,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         final row = _createRowGroup(
           groupKeys: groupKeys,
           sortIdx: ++sortIdx,
-          sampleRow: currentIter.current.value.first,
+          sampleRow: currentIter.current.value,
         );
 
         currentParent = parentStack.lastOrNull;
@@ -431,7 +431,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
   PlutoRow _createRowGroup({
     required List<String> groupKeys,
     required int sortIdx,
-    required PlutoRow sampleRow,
+    required List<PlutoRow> sampleRow,
   }) {
     final cells = <String, PlutoCell>{};
 
@@ -455,8 +455,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var isFirst = true;
 
 
-    for (var e in sampleRow.cells.entries) {
-      final map = e.value.data;
+    for (var e in sampleRow) {
+      final map = e.cells.entries.first.value.data;
       final _key = map?['key'];
       final _subkey1 = map?['subkey1'];
       final _subkey2 = map?['subkey2'];
@@ -494,7 +494,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       isFirst = false;
     }
 
-    for (var e in sampleRow.cells.entries) {
+    for (var e in sampleRow.first.cells.entries) {
       cells[e.key] = PlutoCell(
         value: visibleColumns.firstWhereOrNull((c) => c.field == e.key) != null
             ? e.value.value
