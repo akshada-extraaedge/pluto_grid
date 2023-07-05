@@ -446,6 +446,54 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       ),
     );
 
+    var key;
+    var subkey1;
+    var subkey2;
+    var subkey3;
+    var subkey4;
+
+    var isFirst = true;
+
+
+    for (var e in sampleRow.cells.entries) {
+      final map = e.value.data;
+      final _key = map?['key'];
+      final _subkey1 = map?['subkey1'];
+      final _subkey2 = map?['subkey2'];
+      final _subkey3 = map?['subkey3'];
+      final _subkey4 = map?['subkey4'];
+
+      if(isFirst){
+        key = _key;
+        subkey1 = _subkey1;
+        subkey2 = _subkey2;
+        subkey3 = _subkey3;
+        subkey4 = _subkey4;
+      }
+
+      if(key!=_key){
+        key = null;
+      }
+
+      if(subkey1!=_subkey1){
+        subkey1 = null;
+      }
+
+      if(subkey2!=_subkey2){
+        subkey2 = null;
+      }
+
+      if(subkey3!=_subkey3){
+        subkey3 = null;
+      }
+
+      if(subkey4!=_subkey4){
+        subkey4 = null;
+      }
+
+      isFirst = false;
+    }
+
     for (var e in sampleRow.cells.entries) {
       cells[e.key] = PlutoCell(
         value: visibleColumns.firstWhereOrNull((c) => c.field == e.key) != null
@@ -453,11 +501,11 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             : null,
         key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
-            'key': 99,
-            'subkey1': 9,
-            'subkey2': 9,
-            'subkey3': 9,
-            'subkey4': 9
+            'key': key,
+            'subkey1': subkey1,
+            'subkey2': subkey2,
+            'subkey3': subkey3,
+            'subkey4': subkey4
           }
           //edited
           )
