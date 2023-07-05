@@ -452,7 +452,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             ? e.value.value
             : null,
         key: ValueKey('${groupKey}_${e.key}_cell'),
-        data:e.value.data
+        data:e.value.data  //edited
       )
         ..setColumn(e.value.column)
         ..setRow(row);
