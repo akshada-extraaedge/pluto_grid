@@ -11,7 +11,7 @@ class PlutoCell {
 
   final Key _key;
 
-  final data;
+  final data; //edited
 
   dynamic _value;
 
