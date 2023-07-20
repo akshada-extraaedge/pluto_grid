@@ -467,6 +467,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       final map = e.cells.entries.first.value.data;
 
       print("pluto cell data is ${jsonEncode(map)}");
+
       final _key = map?['key'];
       final _subkey1 = map?['subkey1'];
       final _subkey2 = map?['subkey2'];
@@ -531,7 +532,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             'subkey3': subkey3,
             'subkey4': subkey4,
             'xAxisMap':xAxisMap,
-            'yAxisMap':yAxisMap
+            'yAxisMap':sampleRow.first.cells.entries.first.value.data
           }
           //edited
           )
