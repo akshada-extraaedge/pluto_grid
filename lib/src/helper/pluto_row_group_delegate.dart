@@ -452,8 +452,14 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var subkey3;
     var subkey4;
 
+    List<Map<String, dynamic>> xAxisMapList = [];
+
+    var yAxisMap;
+    var xAxisMap;
+
     var isFirst = true;
 
+    var type;
 
     for (var e in sampleRow) {
       final map = e.cells.entries.first.value.data;
@@ -463,7 +469,17 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       final _subkey3 = map?['subkey3'];
       final _subkey4 = map?['subkey4'];
 
+      type = map?['type'];
+
+      final _yAxisMap = map?['yAxisMap'];
+      final xAxisMap = map?['xAxisMap'];
+
+      if(type=='table2'){
+        xAxisMapList.add(xAxisMap);
+      }
+
       if(isFirst){
+        yAxisMap = _yAxisMap;
         key = _key;
         subkey1 = _subkey1;
         subkey2 = _subkey2;
@@ -494,6 +510,10 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       isFirst = false;
     }
 
+    if(type == 'table2'){
+      xAxisMap = findCommonKeyValues(xAxisMapList);
+    }
+
     for (var e in sampleRow.first.cells.entries) {
       cells[e.key] = PlutoCell(
         value: visibleColumns.firstWhereOrNull((c) => c.field == e.key) != null
@@ -505,7 +525,9 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             'subkey1': subkey1,
             'subkey2': subkey2,
             'subkey3': subkey3,
-            'subkey4': subkey4
+            'subkey4': subkey4,
+            'xAxisMap':xAxisMap,
+            'yAxisMap':yAxisMap
           }
           //edited
           )
@@ -515,4 +537,26 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
     return row;
   }
+}
+
+Map<String, int> findCommonKeyValues(List<Map<String, dynamic>> maps) {
+  // Initialize the common key-value set with the keys and values from the first map
+  Set<String> commonKeys = maps.first.keys.toSet();
+  Set<dynamic> commonValues = maps.first.values.toSet();
+
+  // Iterate through the remaining maps and update the common key-value sets
+  for (final map in maps.skip(1)) {
+    commonKeys = commonKeys.intersection(map.keys.toSet());
+    commonValues = commonValues.intersection(map.values.toSet());
+  }
+
+  // Create a new map containing the common key-value pairs
+  Map<String, int> commonKeyValues = {};
+  for (final key in commonKeys) {
+    if (commonValues.contains(maps.first[key])) {
+      commonKeyValues[key] = maps.first[key]!;
+    }
+  }
+
+  return commonKeyValues;
 }
