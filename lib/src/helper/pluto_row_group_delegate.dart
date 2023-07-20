@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -463,6 +465,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
     for (var e in sampleRow) {
       final map = e.cells.entries.first.value.data;
+
+      print(jsonEncode(map));
       final _key = map?['key'];
       final _subkey1 = map?['subkey1'];
       final _subkey2 = map?['subkey2'];
