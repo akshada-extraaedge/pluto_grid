@@ -463,12 +463,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
     var type;
 
-
-
-    for (var element in sampleRow) {
-      for (var a in element.cells.entries) {
-        print("pluto cell data is ${a.value.data}");
-      }
+    for (var a in sampleRow.first.cells.entries) {
+      print("pluto cell data is ${a.value.data}");
     }
 
     for (var e in sampleRow) {
