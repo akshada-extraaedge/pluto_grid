@@ -535,11 +535,11 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     for (var rows in sampleRow) {
       for(var cell in rows.cells.entries){
         final key = cell.key;
-        final value = temp[key];
-        temp[key] = [
-          ...value,
-          cell.value.data
-        ];
+        final value = temp[key] ?? [];
+
+        value.add(cell.value.data);
+
+        temp[key] = value;
       }
     }
 
