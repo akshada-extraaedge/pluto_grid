@@ -463,10 +463,16 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
     var type;
 
+
+
+    for (var element in sampleRow) {
+      for (var a in element.cells.entries) {
+        print("pluto cell data is ${a.value.data}");
+      }
+    }
+
     for (var e in sampleRow) {
       final map = e.cells.entries.first.value.data;
-
-      print("pluto cell data is ${jsonEncode(map)}");
 
       final _key = map?['key'];
       final _subkey1 = map?['subkey1'];
