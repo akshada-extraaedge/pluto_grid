@@ -530,6 +530,53 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     // if(type == 'table2'){
     //   xAxisMap = findCommonKeyValues(xAxisMapList);
     // }
+    var temp = {};
+
+    for (var rows in sampleRow) {
+      for(var cell in rows.cells.entries){
+        final key = cell.key;
+        final value = temp[key];
+        temp[key] = [
+          ...value,
+          cell.value.data
+        ];
+      }
+    }
+
+
+    var hashmapOfData = {};
+
+    var index = 0;
+    for(var listOfData in temp.values){
+      final key = temp.keys.toList()[index];
+
+      var yAxisMap;
+      List<Map<dynamic, dynamic>> xAxisMapList=[];
+
+      for(var data in listOfData){
+        if(data!=null){
+          final _xAxisMap = data['xAxisMap'];
+          final _yAxisMap = data['yAxisMap'];
+
+          if(_yAxisMap!=null){
+            yAxisMap = _yAxisMap;
+          }
+
+          if(_xAxisMap!=null){
+            xAxisMapList.add(_xAxisMap);
+          }
+        }
+      }
+
+      final xAxisMap = findCommonKeyValues(xAxisMapList);
+
+      hashmapOfData[key]={
+        'yAxisMap':yAxisMap,
+        'xAxisMap':xAxisMap
+      };
+
+      index++;
+    }
 
     for (var e in sampleRow.first.cells.entries) {
       cells[e.key] = PlutoCell(
@@ -543,8 +590,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             'subkey2': subkey2,
             'subkey3': subkey3,
             'subkey4': subkey4,
-            'xAxisMap':e.value.data?['xAxisMap'],
-            'yAxisMap':e.value.data?['yAxisMap']
+            'xAxisMap':hashmapOfData[e.key]['xAxisMap'],
+            'yAxisMap':hashmapOfData[e.key]['yAxisMap']
           }
           //edited
           )
