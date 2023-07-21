@@ -556,7 +556,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
   }
 }
 
-Map<String, int> findCommonKeyValues(List<Map<dynamic, dynamic>> maps) {
+Map<dynamic, dynamic> findCommonKeyValues(List<Map<dynamic, dynamic>> maps) {
   // Initialize the common key-value set with the keys and values from the first map
   Set<dynamic> commonKeys = maps.first.keys.toSet();
   Set<dynamic> commonValues = maps.first.values.toSet();
@@ -568,7 +568,7 @@ Map<String, int> findCommonKeyValues(List<Map<dynamic, dynamic>> maps) {
   }
 
   // Create a new map containing the common key-value pairs
-  Map<String, int> commonKeyValues = {};
+  Map<dynamic, dynamic> commonKeyValues = {};
   for (final key in commonKeys) {
     if (commonValues.contains(maps.first[key])) {
       commonKeyValues[key] = maps.first[key]!;
