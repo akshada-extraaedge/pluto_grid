@@ -454,7 +454,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var subkey3;
     var subkey4;
 
-    List<Map<String, dynamic>> xAxisMapList = [];
+    List<Map<dynamic, dynamic>> xAxisMapList = [];
 
     var yAxisMap;
     var xAxisMap;
@@ -556,9 +556,9 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
   }
 }
 
-Map<String, int> findCommonKeyValues(List<Map<String, dynamic>> maps) {
+Map<String, int> findCommonKeyValues(List<Map<dynamic, dynamic>> maps) {
   // Initialize the common key-value set with the keys and values from the first map
-  Set<String> commonKeys = maps.first.keys.toSet();
+  Set<dynamic> commonKeys = maps.first.keys.toSet();
   Set<dynamic> commonValues = maps.first.values.toSet();
 
   // Iterate through the remaining maps and update the common key-value sets
