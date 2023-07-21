@@ -460,10 +460,30 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var xAxisMap;
 
     var isFirst = true;
+    var isFirst1 = true;
 
     var type;
 
     for (var a in sampleRow.first.cells.entries) {
+
+      final map = a.value.data;
+
+      type = map?['type'];
+
+      final _yAxisMap = map?['yAxisMap'];
+      final xAxisMap = map?['xAxisMap'];
+
+      if(type=='table2'){
+        xAxisMapList.add(xAxisMap);
+      }
+
+      if(isFirst1) {
+        yAxisMap = _yAxisMap;
+      }
+
+
+      isFirst1 = false;
+
       print("pluto cell data is ${a.value.data}");
     }
 
@@ -476,17 +496,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       final _subkey3 = map?['subkey3'];
       final _subkey4 = map?['subkey4'];
 
-      type = map?['type'];
-
-      final _yAxisMap = map?['yAxisMap'];
-      final xAxisMap = map?['xAxisMap'];
-
-      if(type=='table2'){
-        xAxisMapList.add(xAxisMap);
-      }
-
       if(isFirst){
-        yAxisMap = _yAxisMap;
         key = _key;
         subkey1 = _subkey1;
         subkey2 = _subkey2;
@@ -534,7 +544,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             'subkey3': subkey3,
             'subkey4': subkey4,
             'xAxisMap':xAxisMap,
-            'yAxisMap':sampleRow.first.cells.entries.first.value.data
+            'yAxisMap':yAxisMap
           }
           //edited
           )
