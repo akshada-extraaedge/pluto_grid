@@ -568,7 +568,10 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         }
       }
 
-      final xAxisMap = findCommonKeyValues(xAxisMapList);
+      var xAxisMap;
+      if(xAxisMapList.isNotEmpty){
+        xAxisMap = findCommonKeyValues(xAxisMapList);
+      }
 
       hashmapOfData[key]={
         'yAxisMap':yAxisMap,
