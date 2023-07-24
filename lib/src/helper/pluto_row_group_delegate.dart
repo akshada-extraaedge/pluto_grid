@@ -496,7 +496,14 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         final key = cell.key;
         final value = temp[key] ?? [];
 
-        value.add(cell.value.data);
+        var data = cell.value.data;
+
+        data = {
+          ...data,
+          'count':cell.value.value
+        };
+
+        value.add(data);
 
         temp[key] = value;
       }
