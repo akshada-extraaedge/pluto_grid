@@ -454,39 +454,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var subkey3;
     var subkey4;
 
-    List<Map<dynamic, dynamic>> xAxisMapList = [];
-
-    // var yAxisMap;
-    // var xAxisMap;
-    //
     var isFirst = true;
-    // var isFirst1 = true;
-    //
-    // var type;
-    //
-    // for (var a in sampleRow.first.cells.entries) {
-    //
-    //   final map = a.value.data;
-    //
-    //   type = map?['type'];
-    //
-    //   final _yAxisMap = map?['yAxisMap'];
-    //   final xAxisMap = map?['xAxisMap'];
-    //
-    //   if(type=='table2'){
-    //     xAxisMapList.add(xAxisMap);
-    //   }
-    //
-    //   if(isFirst1) {
-    //     yAxisMap = _yAxisMap;
-    //   }
-    //
-    //
-    //   isFirst1 = false;
-    //
-    //   print("pluto cell data is ${a.value.data}");
-    // }
-
     for (var e in sampleRow) {
       final map = e.cells.entries.first.value.data;
 
@@ -503,33 +471,24 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         subkey3 = _subkey3;
         subkey4 = _subkey4;
       }
-
       if(key!=_key){
         key = null;
       }
-
       if(subkey1!=_subkey1){
         subkey1 = null;
       }
-
       if(subkey2!=_subkey2){
         subkey2 = null;
       }
-
       if(subkey3!=_subkey3){
         subkey3 = null;
       }
-
       if(subkey4!=_subkey4){
         subkey4 = null;
       }
-
       isFirst = false;
     }
 
-    // if(type == 'table2'){
-    //   xAxisMap = findCommonKeyValues(xAxisMapList);
-    // }
     var temp = {};
 
     for (var rows in sampleRow) {
