@@ -499,7 +499,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         final key = cell.key;
         final value = temp[key] ?? [];
 
-        var data = cell.value.data;
+        var data = cell.value.data ?? {};
 
         if(data!=null) {
           data = {...data, 'count': cell.value.value};
@@ -524,8 +524,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
       for(var data in listOfData){ // it itrates all cells in a row
         if(data!=null){
-          final _xAxisMap = data['xAxisMap'];
-          final _yAxisMap = data['yAxisMap'];
+          final _xAxisMap = data?['xAxisMap'];
+          final _yAxisMap = data?['yAxisMap'];
           final _count = data['count'];
 
           if(_yAxisMap!=null){
