@@ -271,7 +271,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
   @override
   bool isEditableCell(PlutoCell cell) =>
       cell.row.type.isNormal && !isRowGroupColumn(cell.column);
-  @override
+
   bool isNumberType(PlutoCell cell) =>
       cell.column.type == PlutoColumnType.number();
 
