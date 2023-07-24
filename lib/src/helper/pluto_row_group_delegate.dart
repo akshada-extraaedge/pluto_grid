@@ -548,11 +548,14 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     }
 
     for (var e in sampleRow.first.cells.entries) {
+      final column = visibleColumns.firstWhereOrNull((c) => c.field == e.key);
       cells[e.key] = PlutoCell(
-        value: visibleColumns.firstWhereOrNull((c) => c.field == e.key) != null
-            ? 'test'
-            : hashmapOfData?[e.key]?['count'].toString() ?? '0',
-        key: ValueKey('${groupKey}_${e.key}_cell'),
+          value: column == null
+              ? null
+              : column.type == PlutoColumnType.number()
+                  ? hashmapOfData?[e.key]?['count'] ?? 0
+                  : e.value.value,
+          key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
             'key': key,
             'subkey1': subkey1,
