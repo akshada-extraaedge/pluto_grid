@@ -498,10 +498,9 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
         var data = cell.value.data;
 
-        data = {
-          ...data,
-          'count':cell.value.value
-        };
+        if(data!=null) {
+          data = {...data, 'count': cell.value.value};
+        }
 
         value.add(data);
 
