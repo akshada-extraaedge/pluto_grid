@@ -271,6 +271,9 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
   @override
   bool isEditableCell(PlutoCell cell) =>
       cell.row.type.isNormal && !isRowGroupColumn(cell.column);
+  @override
+  bool isNumberType(PlutoCell cell) =>
+      cell.column.type == PlutoColumnType.number();
 
   /// {@macro pluto_row_group_delegate_isExpandableCell}
   @override
@@ -554,12 +557,10 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     }
 
     for (var e in sampleRow.first.cells.entries) {
-      final column = columns.firstWhereOrNull((c) => c.field == e.key);
+
       cells[e.key] = PlutoCell(
-          value: column == null
-              ? null
-              : column.type == PlutoColumnType.number()
-                  ? hashmapOfData?[e.key]?['count'] ?? 0
+          value: isNumberType(e.value)
+              ? hashmapOfData?[e.key]?['count'] ?? 0
                   : e.value.value,
           key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
