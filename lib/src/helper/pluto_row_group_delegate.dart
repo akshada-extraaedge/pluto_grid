@@ -494,8 +494,13 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
     var temp = {};
 
+    print('generating temp');
+    var i = 0;
     for (var rows in sampleRow) {// it itrate all rows
+      var j = 0;
+      print('generating temp row $i');
       for(var cell in rows.cells.entries){ // it itrates all cells in a row
+        print('generating temp cell $j');
         final key = cell.key;
         final value = temp[key] ?? [];
 
@@ -505,28 +510,40 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
           data = {...data, 'count': cell.value.value};
         }
 
+        print('generating temp count ${cell.value.value}');
+
         value.add(data);
 
         temp[key] = value;
+        j++;
       }
+      i++;
     }
+    print('generating temp end ');
 
 
     var hashmapOfData = {};
 
     var index = 0;
+    print('calculating count ');
     for(var listOfData in temp.values){
       final key = temp.keys.toList()[index];
 
+      print('calculating count listOfData $i');
       var yAxisMap;
       List<Map<dynamic, dynamic>> xAxisMapList=[];
       var count = 0;
 
+      var j=0;
       for(var data in listOfData){
+        print('calculating count data $j');
         if(data!=null){
           final _xAxisMap = data?['xAxisMap'];
           final _yAxisMap = data?['yAxisMap'];
           final _count = data['count'];
+
+
+          print('calculating count count $_count');
 
           if(_yAxisMap!=null){
             yAxisMap = _yAxisMap;
@@ -540,6 +557,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
             count+=_count;
           }
         }
+        j++;
       }
 
       var xAxisMap;
@@ -547,6 +565,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         xAxisMap = findCommonKeyValues(xAxisMapList);
       }
 
+
+      print('calculating total count $count');
       hashmapOfData[key]={
         'yAxisMap':yAxisMap,
         'xAxisMap':xAxisMap,
@@ -556,8 +576,13 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       index++;
     }
 
+    print('calculating count end');
+
+    print('hashmap is ${jsonEncode(hashmapOfData)}');
+    print('creating cell ');
     for (var e in sampleRow.first.cells.entries) {
 
+      print('creating cell , key is ${e.key} ${hashmapOfData?[e.key]?['count']}');
       cells[e.key] = PlutoCell(
           value: isNumberType(e.value)
               ? hashmapOfData?[e.key]?['count'] ?? 0
@@ -578,6 +603,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         ..setRow(row);
     }
 
+    print('creating cell end');
     return row;
   }
 }
