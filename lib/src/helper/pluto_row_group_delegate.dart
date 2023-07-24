@@ -526,7 +526,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
         if(data!=null){
           final _xAxisMap = data?['xAxisMap'];
           final _yAxisMap = data?['yAxisMap'];
-          final _count = data?['count'];
+          final _count = data['count'];
 
           if(_yAxisMap!=null){
             yAxisMap = _yAxisMap;
@@ -561,7 +561,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       cells[e.key] = PlutoCell(
           value: isNumberType(e.value)
               ? hashmapOfData?[e.key]?['count'] ?? 0
-                  : "a ${e.value.value}",
+                  : e.value.value,
           key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
             'key': key,
