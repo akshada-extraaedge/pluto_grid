@@ -506,16 +506,18 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     var hashmapOfData = {};
 
     var index = 0;
-    for(var listOfData in temp.values){
+    for(var listOfData in temp.values){ // it itrate all rows
       final key = temp.keys.toList()[index];
 
       var yAxisMap;
       List<Map<dynamic, dynamic>> xAxisMapList=[];
+      var count = 0;
 
-      for(var data in listOfData){
+      for(var data in listOfData){ // it itrates all cells in a row
         if(data!=null){
           final _xAxisMap = data['xAxisMap'];
           final _yAxisMap = data['yAxisMap'];
+          final _count = data['count'];
 
           if(_yAxisMap!=null){
             yAxisMap = _yAxisMap;
@@ -523,6 +525,10 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
           if(_xAxisMap!=null){
             xAxisMapList.add(_xAxisMap);
+          }
+
+          if(_count!=null && _count is int){
+            count+=_count;
           }
         }
       }
@@ -534,7 +540,8 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
 
       hashmapOfData[key]={
         'yAxisMap':yAxisMap,
-        'xAxisMap':xAxisMap
+        'xAxisMap':xAxisMap,
+        'count':count,
       };
 
       index++;
@@ -544,7 +551,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
       cells[e.key] = PlutoCell(
         value: visibleColumns.firstWhereOrNull((c) => c.field == e.key) != null
             ? e.value.value
-            : null,
+            : hashmapOfData?[e.key]?['count'].toString() ?? '0',
         key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
             'key': key,
