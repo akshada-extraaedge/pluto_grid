@@ -556,11 +556,7 @@ class PlutoRowGroupByColumnDelegate extends PlutoRowGroupDelegate {
     for (var e in sampleRow.first.cells.entries) {
       final column = visibleColumns.firstWhereOrNull((c) => c.field == e.key);
       cells[e.key] = PlutoCell(
-          value: column == null
-              ? null
-              : column.type == PlutoColumnType.number()
-                  ? hashmapOfData?[e.key]?['count'] ?? 0
-                  : e.value.value,
+          value:  hashmapOfData?[e.key]?['count'] ??  0,
           key: ValueKey('${groupKey}_${e.key}_cell'),
           data: {
             'key': key,
