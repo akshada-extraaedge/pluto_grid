@@ -497,6 +497,7 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
   }
 
   void _initStateManager() {
+    debugPrint('test log');
     _stateManager = PlutoGridStateManager(
       columns: widget.columns,
       rows: widget.rows,
